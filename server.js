@@ -15,9 +15,9 @@ app.use(express.json());
 // Servir arquivos estáticos (HTML, CSS, JS) do diretório atual
 app.use(express.static(path.join(__dirname)));
 
-// Rota principal (Fallback explícito para o frontend)
+// Rota principal (Unificada com o perfil do Admin)
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "profile.html"));
 });
 
 // Caminho do arquivo de banco de dados
