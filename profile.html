@@ -217,10 +217,14 @@
             if (data.n) {
                 const nameEls = [document.getElementById('prof_name'), document.getElementById('suitpayModelName')];
                 nameEls.forEach(el => { if(el) el.innerText = data.n; });
+                const syncNames = document.querySelectorAll('.feed-name-sync');
+                syncNames.forEach(el => el.innerText = data.n);
             }
             if (data.u) {
                 const userEl = document.getElementById('prof_username');
                 if(userEl) userEl.innerText = data.u;
+                const syncUsernames = document.querySelectorAll('.feed-username-sync');
+                syncUsernames.forEach(el => el.innerText = data.u);
             }
             if (data.b) document.getElementById('prof_bio').innerText = data.b;
             if (data.ph) document.getElementById('stat_ph').innerText = data.ph;
@@ -236,6 +240,9 @@
             
             document.getElementById('prof_avatar').src = avatar;
             document.getElementById('prof_cover').src = cover;
+            
+            const syncAvatars = document.querySelectorAll('.feed-avatar-sync');
+            syncAvatars.forEach(el => el.src = avatar);
             
             // Checkout UI
             const ckB = document.getElementById('suitpayBanner');
@@ -263,7 +270,8 @@
                             total--;
                             const m = Math.floor(total/60);
                             const s = total % 60;
-                            document.getElementById('suitpayTimer').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+                            const tEl = document.getElementById('suitpayTimer');
+                            if(tEl) tEl.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
                         }, 1000);
                     }
                 }
