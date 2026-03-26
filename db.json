@@ -32,5 +32,5 @@
   "ckt": "15",
   "syncpay_id": "93491930-a0ac-4d41-970c-80096dbe001d",
   "syncpay_secret": "acb97f30-7a6e-44e5-967c-be7aca8ee94b",
-  "syncpay_url": "https://api.syncpayments.com.br"
+  "syncpay_url": "https://api.syncpay.pro"
 }

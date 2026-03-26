@@ -97,7 +97,8 @@ app.post('/pagamento', async (req, res) => {
         
         // 1. Prioridade para SyncPay (NOVA API: syncpay.pro)
         const syncApiKey = process.env.SYNCPAY_CLIENT_SECRET || process.env.SYNCPAY_API_KEY || dbConfig.syncpay_secret;
-        const syncUrl = process.env.SYNCPAY_BASE_URL || dbConfig.syncpay_url || 'https://api.syncpay.pro';
+        // Força a nova URL conforme solicitado
+        const syncUrl = process.env.SYNCPAY_BASE_URL || 'https://api.syncpay.pro';
 
         if (syncApiKey) {
             console.log('Utilizando Gateway: SyncPay (api.syncpay.pro)');
