@@ -25,16 +25,21 @@
                 <div class="avatar-wrapper">
                     <img src="images/avatar_placeholder.jpg" id="prof_avatar" class="avatar" alt="Avatar">
                     <div class="top-stats">
-                        <div class="stat-item"><i class="far fa-image"></i> <span id="stat_ph">20</span></div>
-                        <div class="stat-item"><i class="fas fa-video"></i> <span id="stat_vi">5</span></div>
-                        <div class="stat-item"><i class="fas fa-lock"></i> <span id="stat_lo">12</span></div>
-                        <div class="stat-item"><i class="far fa-heart"></i> <span id="stat_he">32</span></div>
+                        <div class="stat-item"><i class="far fa-image"></i> <span id="stat_ph">...</span></div>
+                        <div class="stat-item"><i class="fas fa-video"></i> <span id="stat_vi">...</span></div>
+                        <div class="stat-item"><i class="fas fa-lock"></i> <span id="stat_lo">...</span></div>
+                        <div class="stat-item"><i class="far fa-heart"></i> <span id="stat_he">...</span></div>
                     </div>
                 </div>
                 <div class="profile-info">
-                    <h1 class="name" id="prof_name">Leticia</h1>
-                    <p class="username" id="prof_username">@leticiaofc</p>
-                    <div class="bio" id="prof_bio">Olá 🥰 vou te mostrar um pouquinho mais de mim...</div>
+                    <h1 class="name" id="prof_name">...</h1>
+                    <p class="username" id="prof_username">...</p>
+                    <div class="bio" id="prof_bio">...</div>
+                </div>
+                <div class="social-icons" id="social-container">
+                    <a href="#" class="social-icon" id="link_instagram" style="display: none;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
                 </div>
             </div>
 
@@ -57,8 +62,9 @@
             <div class="feed-header">
                 <div class="feed-user">
                     <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
-                    <div class="feed-name-group"><span class="feed-name feed-name-sync">Sayuri</span><span class="feed-username feed-username-sync">@Sayurijesus</span></div>
+                    <div class="feed-name-group"><span class="feed-name feed-name-sync">...</span><span class="feed-username feed-username-sync">...</span></div>
                 </div>
+                <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
             </div>
             <div class="locked-content" id="feed_locked_area">
                 <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
@@ -67,12 +73,109 @@
                 </div>
                 <div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div>
             </div>
+            <div class="feed-footer">
+                <div class="footer-actions">
+                    <i class="far fa-heart"></i>
+                    <i class="far fa-comment"></i>
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="save-post">
+                    <i class="far fa-bookmark"></i>
+                </div>
+            </div>
         </div>
 
         <div class="media-list-area" id="media_list_area" style="display: none; flex-direction: column; gap: 15px;">
-             <!-- Dinamicamente preenchido pelo script -->
-             <div class="feed-card"><div class="locked-content"><div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);"><img id="locked_bg_m1" src="" style="width:100%; height:100%; object-fit:cover; display:none;"><video id="locked_vid_m1" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video></div><div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div></div></div>
-             <div class="feed-card"><div class="locked-content"><div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);"><img id="locked_bg_m2" src="" style="width:100%; height:100%; object-fit:cover; display:none;"><video id="locked_vid_m2" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video></div><div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div></div></div>
+            <!-- Mídia 1 -->
+            <div class="feed-card" style="margin-bottom: 0;">
+                <div class="feed-header">
+                    <div class="feed-user">
+                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
+                        <div class="feed-name-group"><span class="feed-name feed-name-sync">...</span><span class="feed-username feed-username-sync">...</span></div>
+                    </div>
+                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
+                </div>
+                <div class="locked-content">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                        <img id="locked_bg_m1" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <video id="locked_vid_m1" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
+                    </div>
+                    <div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div>
+                </div>
+                <div class="feed-footer"><div class="footer-actions"><i class="far fa-heart"></i> <i class="far fa-comment"></i> <i class="fas fa-dollar-sign"></i></div><div class="save-post"><i class="far fa-bookmark"></i></div></div>
+            </div>
+            <!-- Mídia 2 -->
+            <div class="feed-card" style="margin-bottom: 0;">
+                <div class="feed-header">
+                    <div class="feed-user">
+                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
+                        <div class="feed-name-group"><span class="feed-name feed-name-sync">...</span><span class="feed-username feed-username-sync">...</span></div>
+                    </div>
+                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
+                </div>
+                <div class="locked-content">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                        <img id="locked_bg_m2" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <video id="locked_vid_m2" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
+                    </div>
+                    <div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div>
+                </div>
+                <div class="feed-footer"><div class="footer-actions"><i class="far fa-heart"></i> <i class="far fa-comment"></i> <i class="fas fa-dollar-sign"></i></div><div class="save-post"><i class="far fa-bookmark"></i></div></div>
+            </div>
+            <!-- Mídia 3 -->
+            <div class="feed-card" style="margin-bottom: 0;">
+                <div class="feed-header">
+                    <div class="feed-user">
+                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
+                        <div class="feed-name-group"><span class="feed-name feed-name-sync">...</span><span class="feed-username feed-username-sync">...</span></div>
+                    </div>
+                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
+                </div>
+                <div class="locked-content">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                        <img id="locked_bg_m3" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <video id="locked_vid_m3" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
+                    </div>
+                    <div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div>
+                </div>
+                <div class="feed-footer"><div class="footer-actions"><i class="far fa-heart"></i> <i class="far fa-comment"></i> <i class="fas fa-dollar-sign"></i></div><div class="save-post"><i class="far fa-bookmark"></i></div></div>
+            </div>
+            <!-- Mídia 4 -->
+            <div class="feed-card" style="margin-bottom: 0;">
+                <div class="feed-header">
+                    <div class="feed-user">
+                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
+                        <div class="feed-name-group"><span class="feed-name feed-name-sync">...</span><span class="feed-username feed-username-sync">...</span></div>
+                    </div>
+                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
+                </div>
+                <div class="locked-content">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                        <img id="locked_bg_m4" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <video id="locked_vid_m4" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
+                    </div>
+                    <div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div>
+                </div>
+                <div class="feed-footer"><div class="footer-actions"><i class="far fa-heart"></i> <i class="far fa-comment"></i> <i class="fas fa-dollar-sign"></i></div><div class="save-post"><i class="far fa-bookmark"></i></div></div>
+            </div>
+            <!-- Mídia 5 -->
+            <div class="feed-card" style="margin-bottom: 0;">
+                <div class="feed-header">
+                    <div class="feed-user">
+                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
+                        <div class="feed-name-group"><span class="feed-name feed-name-sync">...</span><span class="feed-username feed-username-sync">...</span></div>
+                    </div>
+                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
+                </div>
+                <div class="locked-content">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                        <img id="locked_bg_m5" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <video id="locked_vid_m5" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
+                    </div>
+                    <div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div>
+                </div>
+                <div class="feed-footer"><div class="footer-actions"><i class="far fa-heart"></i> <i class="far fa-comment"></i> <i class="fas fa-dollar-sign"></i></div><div class="save-post"><i class="far fa-bookmark"></i></div></div>
+            </div>
         </div>
     </div>
     <!-- MODAL CHECKOUT PREMIUM -->
@@ -227,13 +330,32 @@
                 syncUsernames.forEach(el => el.innerText = data.u);
             }
             if (data.b) document.getElementById('prof_bio').innerText = data.b;
-            if (data.ph) document.getElementById('stat_ph').innerText = data.ph;
-            if (data.vi) document.getElementById('stat_vi').innerText = data.vi;
+            if (data.ph) {
+                document.getElementById('stat_ph').innerText = data.ph;
+                const tabP = document.getElementById('tab_btn_posts');
+                if(tabP) tabP.innerHTML = `<i class="fas fa-mobile-alt"></i> ${data.ph} Postagens`;
+            }
+            if (data.vi) {
+                document.getElementById('stat_vi').innerText = data.vi;
+                const tabM = document.getElementById('tab_btn_media');
+                if(tabM) tabM.innerHTML = `<i class="far fa-play-circle"></i> ${data.vi} Mídias`;
+            }
+            if (data.lo) document.getElementById('stat_lo').innerText = data.lo;
             if (data.he) document.getElementById('stat_he').innerText = data.he;
             
             if (data.p1) document.getElementById('pr_1').innerText = data.p1;
             if (data.p3) document.getElementById('pr_3').innerText = data.p3;
             if (data.p6) document.getElementById('pr_6').innerText = data.p6;
+            if (data.ig) {
+                const igEl = document.getElementById('link_instagram');
+                if (igEl) {
+                    igEl.href = data.ig;
+                    igEl.style.display = 'flex';
+                }
+            } else {
+                const igEl = document.getElementById('link_instagram');
+                if (igEl) igEl.style.display = 'none';
+            }
 
             const avatar = cleanUrl(data.av || data.avatar || 'images/avatar_placeholder.jpg');
             const cover = cleanUrl(data.co || data.cover || 'images/cover_placeholder.jpg');
@@ -277,20 +399,38 @@
                 }
             } else {
                 const timerArea = document.getElementById('suitpayTimerArea');
-                if(timerArea) timerArea.style.display = 'none';
+                if(timerArea) {
+                    timerArea.style.display = 'none';
+                    if (window.timerInterval) { clearInterval(window.timerInterval); window.timerInterval = null; }
+                }
             }
 
             const setMedia = (id, url) => {
                 const img = document.getElementById('locked_bg_' + id);
                 const vid = document.getElementById('locked_vid_' + id);
                 if (!img || !vid) return;
-                img.style.display = 'none'; vid.style.display = 'none';
+
+                img.style.display = 'none';
+                vid.style.display = 'none';
+                
                 if (!url) return;
-                if (url.includes('video/') || url.endsWith('.mp4')) { vid.src = url; vid.style.display = 'block'; }
-                else { img.src = url; img.style.display = 'block'; }
+
+                const finalUrl = cleanUrl(url);
+                if (url.match(/\.(mp4|webm|ogg|mov)$/i) || url.includes('/video/')) {
+                    vid.src = finalUrl;
+                    vid.style.display = 'block';
+                } else {
+                    img.src = finalUrl;
+                    img.style.display = 'block';
+                }
             };
-            setMedia('main', data.bl || data.vd);
-            setMedia('m1', data.m1); setMedia('m2', data.m2);
+
+            setMedia('main', data.vd || data.bl);
+            setMedia('m1', data.m1);
+            setMedia('m2', data.m2);
+            setMedia('m3', data.m3);
+            setMedia('m4', data.m4);
+            setMedia('m5', data.m5);
         }
 
         function initButtons() {
