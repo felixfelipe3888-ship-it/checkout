@@ -157,6 +157,11 @@ Object.keys(uploads).forEach(key => {
 });
 
 function getData() {
+    const clean = (url) => {
+        if (!url || typeof url !== 'string') return url;
+        return url.replace(/http:\/\/localhost:\d+/g, '');
+    };
+
     return {
         n: inputs.name ? inputs.name.value : '',
         u: inputs.username ? inputs.username.value : '',
@@ -165,26 +170,26 @@ function getData() {
         vi: inputs.videos ? inputs.videos.value : '',
         lo: inputs.locks ? inputs.locks.value : '',
         he: inputs.hearts ? inputs.hearts.value : '',
-        av: inputs.avatar ? inputs.avatar.value : '',
-        co: inputs.cover ? inputs.cover.value : '',
+        av: clean(inputs.avatar ? inputs.avatar.value : ''),
+        co: clean(inputs.cover ? inputs.cover.value : ''),
         p1: inputs.price1 ? inputs.price1.value : '',
         p3: inputs.price3 ? inputs.price3.value : '',
         p6: inputs.price6 ? inputs.price6.value : '',
         l1: inputs.link1 ? inputs.link1.value : '',
         l3: inputs.link3 ? inputs.link3.value : '',
         l6: inputs.link6 ? inputs.link6.value : '',
-        vd: inputs.video_feed ? inputs.video_feed.value : '',
+        vd: clean(inputs.video_feed ? inputs.video_feed.value : ''),
         ck: inputs.cookies ? inputs.cookies.checked : true,
         ig: inputs.instagram ? inputs.instagram.value : '',
         lb: inputs.langBtn ? inputs.langBtn.checked : true,
-        bl: inputs.video_feed ? inputs.video_feed.value : '',
-        m1: inputs.media1 ? inputs.media1.value : '',
-        m2: inputs.media2 ? inputs.media2.value : '',
-        m3: inputs.media3 ? inputs.media3.value : '',
-        m4: inputs.media4 ? inputs.media4.value : '',
-        m5: inputs.media5 ? inputs.media5.value : '',
-        ckb: inputs.ck_banner ? inputs.ck_banner.value : '',
-        cka: inputs.ck_avatar ? inputs.ck_avatar.value : '',
+        bl: clean(inputs.video_feed ? inputs.video_feed.value : ''),
+        m1: clean(inputs.media1 ? inputs.media1.value : ''),
+        m2: clean(inputs.media2 ? inputs.media2.value : ''),
+        m3: clean(inputs.media3 ? inputs.media3.value : ''),
+        m4: clean(inputs.media4 ? inputs.media4.value : ''),
+        m5: clean(inputs.media5 ? inputs.media5.value : ''),
+        ckb: clean(inputs.ck_banner ? inputs.ck_banner.value : ''),
+        cka: clean(inputs.ck_avatar ? inputs.ck_avatar.value : ''),
         ckmt: inputs.ck_minitext ? inputs.ck_minitext.value : '',
         ckanc: inputs.ck_anchor ? inputs.ck_anchor.value : '',
         ckton: inputs.ck_timer_on ? inputs.ck_timer_on.checked : true,
