@@ -42,10 +42,10 @@
 
 .suitpay-header-info {
     position: absolute;
-    bottom: -35px;
+    bottom: -40px;
     left: 20px;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 12px;
 }
 
@@ -58,12 +58,32 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
+.suitpay-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-bottom: 4px;
+}
+
 .suitpay-model-name {
     color: #1A1A1A;
     font-weight: 800;
-    font-size: 1.25rem;
-    margin-bottom: -30px;
-    z-index: 10;
+    font-size: 1.15rem;
+    line-height: 1.2;
+}
+
+.suitpay-verified {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #EF8641;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.suitpay-verified i {
+    color: #EF8641;
+    font-size: 0.8rem;
 }
 
 .suitpay-close {
@@ -79,7 +99,7 @@
 }
 
 .suitpay-modal-body {
-    padding: 45px 20px 20px;
+    padding: 50px 20px 20px;
 }
 
 .suitpay-modal-body h3 {
@@ -88,11 +108,32 @@
     color: #333;
 }
 
+.suitpay-price-area {
+    margin: 8px 0 10px;
+}
+
+.suitpay-anchor {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #999;
+    text-decoration: line-through;
+    text-decoration-color: #e74c3c;
+    text-decoration-thickness: 2px;
+    margin-bottom: 2px;
+}
+
 .suitpay-price {
     font-size: 1.8rem;
     color: #EF8641;
     font-weight: 800;
-    margin: 5px 0 15px;
+    margin: 2px 0 5px;
+}
+
+.suitpay-mini-text {
+    font-size: 0.82rem;
+    color: #666 !important;
+    font-weight: 500;
+    margin: 0;
 }
 
 #suitpayTimerArea {
@@ -213,26 +254,20 @@
     margin-bottom: 10px;
 }
 
-.suitpay-secure-info {
-    font-size: 0.75rem;
-    color: #888;
+.suitpay-secure-footer {
+    font-size: 0.7rem;
+    color: #999;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    opacity: 0.8;
+    gap: 5px;
 }
 
-.suitpay-secure-info i {
+.suitpay-secure-footer i {
     color: #28a745;
-    font-size: 0.8rem;
-}
-
-#suitpayMiniText {
-    color: #444 !important; /* Preto não muito forte */
-    font-weight: 500;
+    font-size: 0.75rem;
 }
 
 @media (max-width: 450px) {

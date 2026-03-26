@@ -47,8 +47,14 @@
                 <p class="section-label">Assinaturas</p>
                 <button class="sub-btn" id="btn_plan1"><span>1 mês</span><span>R$ <span id="pr_1">--,--</span></span></button>
                 <div id="promo-container">
-                    <button class="sub-btn" id="btn_plan3"><span>3 meses</span><span>R$ <span id="pr_3">--,--</span></span></button>
-                    <button class="sub-btn" id="btn_plan6"><span>6 meses</span><span>R$ <span id="pr_6">--,--</span></span></button>
+                    <div class="promo-header" onclick="togglePromo()">
+                        <p class="section-label">Promoções</p>
+                        <i class="fas fa-chevron-up" id="promo-arrow"></i>
+                    </div>
+                    <div id="promo-plans">
+                        <button class="sub-btn" id="btn_plan3"><span>3 meses</span><span>R$ <span id="pr_3">--,--</span></span></button>
+                        <button class="sub-btn" id="btn_plan6"><span>6 meses</span><span>R$ <span id="pr_6">--,--</span></span></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -242,12 +248,35 @@
         // --- LÓGICA DE CHECKOUT E PERFIL ---
         let currentPlanPrice = 29.90;
 
+        function togglePromo() {
+            const plans = document.getElementById('promo-plans');
+            const arrow = document.getElementById('promo-arrow');
+            if (plans.style.display === 'none') {
+                plans.style.display = 'block';
+                arrow.classList.remove('fa-chevron-down');
+                arrow.classList.add('fa-chevron-up');
+            } else {
+                plans.style.display = 'none';
+                arrow.classList.remove('fa-chevron-up');
+                arrow.classList.add('fa-chevron-down');
+            }
+        }
+
+        function syncModalImages() {
+            const coverElement = document.getElementById('prof_cover');
+            const avatarElement = document.getElementById('prof_avatar');
+            if(coverElement && coverElement.src) document.getElementById('suitpayBanner').src = coverElement.src;
+            if(avatarElement && avatarElement.src) document.getElementById('suitpayAvatar').src = avatarElement.src;
+        }
+
         function openSuitPayModal(planName, priceStr) {
             document.getElementById('suitpayPlanName').innerText = 'Assinatura - ' + planName;
             document.getElementById('suitpayPlanPrice').innerText = 'R$ ' + priceStr;
             currentPlanPrice = parseFloat(priceStr.replace('.', '').replace(',', '.'));
+            syncModalImages();
             document.getElementById('suitpayForm').style.display = 'block';
             document.getElementById('suitpayPixArea').style.display = 'none';
+            document.getElementById('suitpayForm').reset();
             document.getElementById('suitpayModal').style.display = 'flex';
         }
 
