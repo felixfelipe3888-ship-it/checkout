@@ -104,8 +104,10 @@ app.post('/pagamento', async (req, res) => {
             }
         };
 
-        const response = await axios.post('https://api.exemplo-gateway.com/v1/checkout', payloadGateway, {
+        const response = await axios.post('https://ws.suitpay.app/api/v1/gateway/request-qrcode', payloadGateway, {
             headers: {
+                'ci': apiKey,
+                'cs': apiKey,
                 'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             }
