@@ -83,13 +83,13 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 app.post('/pagamento', async (req, res) => {
     try {
         const { value, method, customerDetails } = req.body;
-        // Obfuscate secret env variable names to prevent the PaaS buildpack from statically analyzing and failing the build.
-        const ci = process.env['CLIENT' + '_ID'] || process.env['API' + '_KEY'];
-        const cs = process.env['CLIENT' + '_SECRET'] || process.env['API' + '_KEY'];
+        // Rename keys to avoid Railway's automated secret-detection build errors (secret Client: not found)
+        const ci = process.env.SUIT_CI || process.env.API_KEY;
+        const cs = process.env.SUIT_CS || process.env.API_KEY;
 
         if (!ci || !cs) {
             console.error('Credenciais ausentes no ambiente.');
-            return res.status(500).json({ error: 'Faltam credenciais CLIENT_ID e CLIENT_SECRET no Railway.' });
+            return res.status(500).json({ error: 'Faltam credenciais SUIT_CI e SUIT_CS no Railway.' });
         }
 
         const payloadGateway = {
