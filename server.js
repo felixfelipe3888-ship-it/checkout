@@ -25,7 +25,7 @@ const DB_FILE = path.join(__dirname, 'db.json');
 
 // --- Rotas de Admin (Substituindo o antigo PHP) ---
 
-// 1. Carregar Configurações (antigo load-config.php)
+// 1. Carregar Configurações
 app.get('/api/load-config', (req, res) => {
     try {
         if (fs.existsSync(DB_FILE)) {
@@ -40,7 +40,7 @@ app.get('/api/load-config', (req, res) => {
     }
 });
 
-// 2. Salvar Configurações (antigo save-config.php)
+// 2. Salvar Configurações
 app.post('/api/save-config', (req, res) => {
     try {
         fs.writeFileSync(DB_FILE, JSON.stringify(req.body, null, 2), 'utf8');
@@ -67,19 +67,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// 3. Upload de Arquivos (antigo upload.php)
+// 3. Upload de Arquivos
 app.post('/api/upload', upload.single('file'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'Nenhum arquivo enviado.' });
     }
-    // Retorna a URL relativa do arquivo para o Admin.js usar
-    const fileUrl = '/uploads/' + req.file.filename;
-    res.json({ url: fileUrl });
+    res.json({ url: '/uploads/' + req.file.filename });
 });
 
-// --- Fim das Rotas de Admin ---
+// --- Rota de pagamento (Unificada para SyncPay e SuitPay) ---
 
-// Rota de pagamento (Unificada para SuitPay e SyncPay)
 app.post('/pagamento', async (req, res) => {
     try {
         const { amount, value, client, customerDetails } = req.body;
@@ -90,7 +87,7 @@ app.post('/pagamento', async (req, res) => {
             return res.status(400).json({ error: 'Dados de pagamento incompletos (valor ou cliente ausentes).' });
         }
 
-        // Tenta pegar configurações do db.json para SyncPay primeiro (se configurado no admin)
+        // Tenta pegar configurações do db.json
         let dbConfig = {};
         if (fs.existsSync(DB_FILE)) {
             dbConfig = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
@@ -98,59 +95,46 @@ app.post('/pagamento', async (req, res) => {
 
         // --- Detecção de Gateway e Credenciais ---
         
-        // 1. Prioridade para SyncPay (se houver credenciais específicas)
-        const syncId = process.env.SYNCPAY_CLIENT_ID || dbConfig.syncpay_id;
-        const syncSecret = process.env.SYNCPAY_CLIENT_SECRET || dbConfig.syncpay_secret;
-        const syncUrl = process.env.SYNCPAY_BASE_URL || dbConfig.syncpay_url || 'https://api.syncpayments.com.br';
+        // 1. Prioridade para SyncPay (NOVA API: syncpay.pro)
+        const syncApiKey = process.env.SYNCPAY_CLIENT_SECRET || process.env.SYNCPAY_API_KEY || dbConfig.syncpay_secret;
+        const syncUrl = process.env.SYNCPAY_BASE_URL || dbConfig.syncpay_url || 'https://api.syncpay.pro';
 
-        if (syncId && syncSecret) {
-            console.log('Iniciando tentativa com SyncPay...');
+        if (syncApiKey) {
+            console.log('Utilizando Gateway: SyncPay (api.syncpay.pro)');
+            
+            // Autenticação: Basic Auth com API Key em Base64
+            const authBase64 = Buffer.from(syncApiKey).toString('base64');
+
+            // Payload correto conforme nova documentação SyncPay
             const payloadSync = {
                 amount: parseFloat(finalAmount),
                 customer: {
                     name: finalClient.name,
                     email: finalClient.email,
-                    cpf: String(finalClient.document).replace(/\D/g, "")
+                    cpf: String(finalClient.document || finalClient.cpf || '').replace(/\D/g, '')
+                },
+                pix: {
+                    expiresInDays: 1
                 }
             };
-            
-            // Tenta múltiplos endpoints comuns para SyncPay (v2, v1, etc)
-            const endpoints = ['/api/v2/pix', '/api/v1/pix', '/v1/pix'];
-            let lastError;
 
-            for (const endpoint of endpoints) {
-                try {
-                    const baseUrl = syncUrl.endsWith('/') ? syncUrl.slice(0, -1) : syncUrl;
-                    const fullUrl = baseUrl + endpoint;
-                    console.log(`[SYNC] Tentando POST ${fullUrl}`);
-                    
-                    const response = await axios.post(fullUrl, payloadSync, {
-                        headers: {
-                            'x-api-key': syncSecret,
-                            'x-client-id': syncId,
-                            'Content-Type': 'application/json'
-                        },
-                        timeout: 2500 // Reduzido para evitar que o Railway dê 503 (timeout do proxy)
-                    });
-
-                    console.log(`[SYNC] Resposta recebida de ${endpoint}: ${response.status}`);
-                    
-                    if (response.data?.paymentCodeBase64 || response.data?.qr_code || response.data?.data?.qr_code) {
-                        return res.json({
-                            qr_code: response.data.paymentCodeBase64 || response.data?.qr_code || response.data?.data?.qr_code || '',
-                            pay_in_code: response.data.paymentCode || response.data?.pay_in_code || response.data?.data?.pay_in_code || response.data?.pix_copy_paste || ''
-                        });
-                    }
-                } catch (err) {
-                    const status = err.response?.status || 'TIMEOUT';
-                    console.warn(`[SYNC] Falha no endpoint ${endpoint}: ${status} - ${err.message}`);
-                    lastError = err;
-                    // Se o erro não for 404 (ex: 401, 403, 400), provavelmente a URL está certa e as chaves ou dados estão errados.
-                    if (err.response && err.response.status !== 404) break; 
-                }
-            }
+            console.log('Enviando para SyncPay:', `${syncUrl}/v1/transactions`);
             
-            console.warn('SyncPay falhou completamente após tentar todos os endpoints.');
+            const response = await axios.post(`${syncUrl}/v1/transactions`, payloadSync, {
+                headers: {
+                    'Authorization': `Basic ${authBase64}`,
+                    'Content-Type': 'application/json'
+                },
+                timeout: 10000 
+            });
+
+            console.log('Resposta SyncPay recebida com sucesso.');
+
+            // Retorna os campos conforme nova API
+            return res.json({
+                qr_code: response.data?.paymentCodeBase64 || '',
+                pay_in_code: response.data?.paymentCode || ''
+            });
         }
 
         // 2. Fallback para SuitPay
@@ -165,7 +149,7 @@ app.post('/pagamento', async (req, res) => {
                 amount: parseFloat(finalAmount),
                 client: {
                     name: finalClient.name,
-                    document: finalClient.document,
+                    document: String(finalClient.document || '').replace(/\D/g, ''),
                     email: finalClient.email
                 }
             };
@@ -188,11 +172,14 @@ app.post('/pagamento', async (req, res) => {
         // Caso nenhum gateway esteja configurado
         console.error('Nenhuma credencial de API encontrada (SyncPay ou SuitPay).');
         return res.status(500).json({ 
-            error: 'Erro de configuração: Credenciais de API não encontradas no Railway ou no Painel Admin.' 
+            error: 'Erro de configuração: Credenciais de API (SYNCPAY_CLIENT_SECRET) não encontradas.' 
         });
 
     } catch (error) {
         console.error('Erro no processamento do pagamento:', error.message);
+        if (error.response) {
+            console.error('Detalhes do erro na API externa:', JSON.stringify(error.response.data));
+        }
         res.status(500).json({ 
             error: 'Falha ao processar o pagamento na API externa.',
             details: error.response?.data || error.message
