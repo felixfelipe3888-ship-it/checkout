@@ -496,7 +496,7 @@
                     <i class="fas fa-clock"></i> Oferta expira em: <span id="suitpayTimer">15:00</span>
                 </div>
                 
-                <form id="suitpayForm" onsubmit="handleSuitPaySubmit(event)">
+                <form id="suitpayForm" onsubmit="handlePushinPaySubmit(event)">
                     <div class="suitpay-input-group">
                         <label>Nome Completo</label>
                         <input type="text" id="spName" required placeholder="Seu nome">
@@ -505,10 +505,7 @@
                         <label>E-mail</label>
                         <input type="email" id="spEmail" required placeholder="seu@email.com">
                     </div>
-                    <div class="suitpay-input-group">
-                        <label>CPF</label>
-                        <input type="text" id="spCpf" required placeholder="000.000.000-00" oninput="maskCpf(this)">
-                    </div>
+                    <!-- CPF Removido conforme solicitado -->
                     <button type="submit" id="spSubmitBtn" class="suitpay-submit-btn">
                         <span>Gerar Pix</span>
                     </button>
@@ -524,13 +521,94 @@
             </div>
         </div>
     </div>
-
-    <script src="js/checkout.js"></script>
     <script>
+        // --- LÓGICA DE CHECKOUT PUSHINPAY ---
+        let currentPlanPrice = 29.90; // Fallback padrão
+
+        function syncModalImages() {
+            const coverElement = document.getElementById('prof_cover');
+            const avatarElement = document.getElementById('prof_avatar');
+            if(coverElement && coverElement.src) document.getElementById('suitpayBanner').src = coverElement.src;
+            if(avatarElement && avatarElement.src) document.getElementById('suitpayAvatar').src = avatarElement.src;
+        }
+
+        function openSuitPayModal(planName, priceStr) {
+            document.getElementById('suitpayPlanName').innerText = 'Assinatura - ' + planName;
+            document.getElementById('suitpayPlanPrice').innerText = 'R$ ' + priceStr;
+            currentPlanPrice = parseFloat(priceStr.replace('.', '').replace(',', '.'));
+            syncModalImages();
+            document.getElementById('suitpayForm').style.display = 'block';
+            document.getElementById('suitpayPixArea').style.display = 'none';
+            document.getElementById('suitpayForm').reset();
+            document.getElementById('suitpayModal').style.display = 'flex';
+        }
+
+        function closeSuitPayModal() {
+            document.getElementById('suitpayModal').style.display = 'none';
+        }
+
+        async function handlePushinPaySubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('spName').value;
+            const email = document.getElementById('spEmail').value;
+            const btn = document.getElementById('spSubmitBtn');
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando PIX...';
+            btn.disabled = true;
+
+            try {
+                const payload = {
+                    amount: currentPlanPrice,
+                    client: { name: name, email: email }
+                };
+
+                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const backendUrl = (isLocal && window.location.port !== '3030') 
+                    ? 'http://localhost:3030/pagamento' 
+                    : '/pagamento';
+
+                const response = await fetch(backendUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Erro ao processar pagamento.');
+                }
+
+                const data = await response.json();
+                if (data.qr_code) {
+                    document.getElementById('suitpayForm').style.display = 'none';
+                    document.getElementById('suitpayPixArea').style.display = 'block';
+                    const qrRaw = data.qr_code;
+                    document.getElementById('spQrCode').src = qrRaw.startsWith('data:')
+                        ? qrRaw
+                        : 'data:image/png;base64,' + qrRaw;
+                    document.getElementById('spCopyPaste').value = data.pay_in_code || '';
+                } else {
+                    throw new Error('Falha ao gerar o código do PIX.');
+                }
+            } catch(err) {
+                console.error('Erro Fatal:', err);
+                alert('ERRO AO GERAR PIX:\n' + err.message);
+            } finally {
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+            }
+        }
+
+        function copyPixCode() {
+            const copyText = document.getElementById('spCopyPaste');
+            if(!copyText || !copyText.value) return;
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value).then(() => alert('Código PIX copiado!'));
+        }
+
         function switchTab(tabName) {
             document.getElementById('tab_btn_posts').classList.remove('active');
             document.getElementById('tab_btn_media').classList.remove('active');
-            
             if (tabName === 'posts') {
                 document.getElementById('tab_btn_posts').classList.add('active');
                 document.getElementById('feed_card_area').style.display = 'block';
@@ -542,17 +620,111 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.sub-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const priceSpan = btn.querySelector('span:nth-child(2) span');
-                    const planNameSpan = btn.querySelector('span:nth-child(1)');
-                    if(!priceSpan || !planNameSpan) return;
-                    const planName = planNameSpan.innerText;
-                    const price = priceSpan.innerText;
-                    if (typeof openSuitPayModal === 'function') openSuitPayModal(planName, price);
-                });
+        function loadProfile(data) {
+            if (!data) return;
+            if (data.n) {
+                document.getElementById('prof_name').innerText = data.n;
+                const syncNames = document.querySelectorAll('.feed-name-sync');
+                syncNames.forEach(el => el.innerText = data.n);
+            }
+            if (data.u) {
+                document.getElementById('prof_username').innerText = data.u;
+                const syncUsernames = document.querySelectorAll('.feed-username-sync');
+                syncUsernames.forEach(el => el.innerText = data.u);
+            }
+            if (data.b) document.getElementById('prof_bio').innerText = data.b;
+            if (data.ph) document.getElementById('stat_ph').innerText = data.ph;
+            if (data.vi) document.getElementById('stat_vi').innerText = data.vi;
+            if (data.he) document.getElementById('stat_he').innerText = data.he;
+            if (data.p1) document.getElementById('pr_1').innerText = data.p1;
+            if (data.p3) document.getElementById('pr_3').innerText = data.p3;
+            if (data.p6) document.getElementById('pr_6').innerText = data.p6;
+
+            const avatar = data.av || data.avatar || 'images/avatar_placeholder.jpg';
+            document.getElementById('prof_avatar').src = avatar;
+            const syncAvatars = document.querySelectorAll('.feed-avatar-sync');
+            syncAvatars.forEach(el => el.src = avatar);
+
+            const cover = data.co || data.cover || 'images/cover_placeholder.jpg';
+            document.getElementById('prof_cover').src = cover;
+            
+            if (data.ckb) document.getElementById('suitpayBanner').src = data.ckb;
+            if (data.cka) document.getElementById('suitpayAvatar').src = data.cka;
+            if (data.ckmt) {
+                document.getElementById('suitpayMiniText').innerText = data.ckmt;
+                document.getElementById('suitpayMiniText').style.display = 'block';
+            } else {
+                document.getElementById('suitpayMiniText').style.display = 'none';
+            }
+            if (data.ckanc) {
+                document.getElementById('suitpayAnchor').innerText = data.ckanc;
+                document.getElementById('suitpayAnchor').style.display = 'block';
+            } else {
+                document.getElementById('suitpayAnchor').style.display = 'none';
+            }
+
+            if (data.ckton) {
+                document.getElementById('suitpayTimerArea').style.display = 'block';
+                if (!window.timerInterval) {
+                    let totalSecs = (parseInt(data.ckt) || 15) * 60;
+                    window.timerInterval = setInterval(() => {
+                        if (totalSecs <= 0) clearInterval(window.timerInterval);
+                        else {
+                            totalSecs--;
+                            let m = Math.floor((totalSecs % 3600) / 60);
+                            let s = totalSecs % 60;
+                            document.getElementById('suitpayTimer').innerText = m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
+                        }
+                    }, 1000);
+                }
+            } else {
+                document.getElementById('suitpayTimerArea').style.display = 'none';
+            }
+
+            const setMedia = (id, url) => {
+                const img = document.getElementById('locked_bg_' + id);
+                const vid = document.getElementById('locked_vid_' + id);
+                if (!img || !vid) return;
+                img.style.display = 'none'; vid.style.display = 'none';
+                if (!url) return;
+                if (url.includes('video/') || url.endsWith('.mp4')) {
+                    vid.src = url; vid.style.display = 'block';
+                } else {
+                    img.src = url; img.style.display = 'block';
+                }
+            };
+            setMedia('main', data.bl || data.vd);
+            setMedia('m1', data.m1); setMedia('m2', data.m2); setMedia('m3', data.m3); setMedia('m4', data.m4); setMedia('m5', data.m5);
+        }
+
+        function initButtons() {
+            const plans = ['btn_plan1', 'btn_plan3', 'btn_plan6'];
+            plans.forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    btn.onclick = () => {
+                        const priceSpan = btn.querySelector('span:nth-child(2) span');
+                        const planNameSpan = btn.querySelector('span:nth-child(1)');
+                        if (priceSpan && planNameSpan) {
+                            openSuitPayModal(planNameSpan.innerText, priceSpan.innerText);
+                        }
+                    };
+                    btn.style.cursor = 'pointer';
+                }
             });
+        }
+
+        window.addEventListener('load', () => {
+            initButtons();
+            const saved = localStorage.getItem('profileData');
+            if (saved) loadProfile(JSON.parse(saved));
+        });
+
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'UPDATE_PROFILE') {
+                loadProfile(event.data.data);
+                initButtons();
+            }
         });
     </script>
 </body>

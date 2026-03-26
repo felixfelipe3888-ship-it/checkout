@@ -420,20 +420,13 @@
         </div>
 
         <div class="form-section">
-            <h3><i class="fas fa-key"></i> Configurações SyncPay</h3>
-            <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 15px;">Estes dados são usados para gerar o PIX no checkout. Se preenchidos aqui, eles serão usados na exportação do ZIP.</p>
+            <h3><i class="fas fa-key"></i> Configurações PushinPay</h3>
+            <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 15px;">Estes dados são usados para gerar o PIX no checkout (PushinPay).</p>
             <div class="form-group">
-                <label>SyncPay Client ID</label>
-                <input type="text" id="input_syncpay_id" class="form-control" placeholder="ID da sua conta SyncPay">
+                <label>PushinPay API Token</label>
+                <input type="password" id="input_syncpay_secret" class="form-control" placeholder="64434|qlpNhg...">
             </div>
-            <div class="form-group">
-                <label>SyncPay Client Secret</label>
-                <input type="password" id="input_syncpay_secret" class="form-control" placeholder="Secret da sua conta SyncPay">
-            </div>
-            <div class="form-group">
-                <label>SyncPay API URL</label>
-                <input type="text" id="input_syncpay_url" class="form-control" value="https://api.syncpayments.com.br">
-            </div>
+            <!-- SyncPay ID e URL removidos para simplificação conforme PushinPay -->
         </div>
 
         <div class="form-section">

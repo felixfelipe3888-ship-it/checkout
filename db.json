@@ -11,7 +11,7 @@
   "p1": "12,02",
   "p3": "34,09",
   "p6": "55,09",
-  "l1": "https://pay.sunize.com.br/gBDAzXsl",
+  "l1": "",
   "l3": "",
   "l6": "",
   "vd": "http://localhost:3000/uploads/1774461390837-775989394.webp",
@@ -30,7 +30,5 @@
   "ckanc": "R$ 99,99",
   "ckton": true,
   "ckt": "15",
-  "syncpay_id": "93491930-a0ac-4d41-970c-80096dbe001d",
-  "syncpay_secret": "acb97f30-7a6e-44e5-967c-be7aca8ee94b",
-  "syncpay_url": "https://api.syncpay.pro"
+  "syncpay_secret": "64434|qlpNhgXR6IKWr5KKLcxGr5KyeyiQaEOn1SyzduKVdda6701c"
 }

@@ -5,34 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Privacy | Assinatura Premium</title>
-
-    <!-- Google Fonts - Inter & Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/premium.css">
     <link rel="stylesheet" href="css/checkout.css">
 </head>
 <body>
-
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="logo">privacy<span>.</span></div>
-        <div class="globe-icon">
-            <i class="fas fa-globe"></i>
-        </div>
+        <div class="globe-icon"><i class="fas fa-globe"></i></div>
     </nav>
 
     <div class="container">
-        <!-- PROFILE CARD -->
         <div class="profile-card">
             <img src="images/cover_placeholder.jpg" id="prof_cover" class="cover-photo" alt="Cover">
-            
             <div class="profile-header">
                 <div class="avatar-wrapper">
                     <img src="images/avatar_placeholder.jpg" id="prof_avatar" class="avatar" alt="Avatar">
@@ -43,511 +31,52 @@
                         <div class="stat-item"><i class="far fa-heart"></i> <span id="stat_he">32</span></div>
                     </div>
                 </div>
-
                 <div class="profile-info">
                     <h1 class="name" id="prof_name">Sayuri</h1>
                     <p class="username" id="prof_username">@Sayurijesus</p>
-                    <div class="bio" id="prof_bio">
-                        Olá 🥰 espero que esteja bem rsrs ...... vou te mostrar um pouquinho mais de mim , espero q goste ............
-                    </div>
-                    <a href="#" class="read-more">Ler mais</a>
-                </div>
-
-                <div class="social-icons" id="social-container">
-                    <a href="#" class="social-icon" id="link_instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
+                    <div class="bio" id="prof_bio">Olá 🥰 vou te mostrar um pouquinho mais de mim...</div>
                 </div>
             </div>
 
-            <!-- SUBSCRIPTIONS -->
             <div class="subscription-section">
                 <p class="section-label">Assinaturas</p>
-                <button class="sub-btn" id="btn_plan1">
-                    <span>1 mês</span>
-                    <span>R$ <span id="pr_1">40,00</span></span>
-                </button>
-
+                <button class="sub-btn" id="btn_plan1"><span>1 mês</span><span>R$ <span id="pr_1">40,00</span></span></button>
                 <div id="promo-container">
-                    <div class="promo-header" onclick="togglePromo()">
-                        <p class="section-label">Promoções</p>
-                        <i class="fas fa-chevron-up" id="promo-arrow"></i>
-                    </div>
-                    <div id="promo-plans">
-                        <button class="sub-btn" id="btn_plan3">
-                            <span>3 meses</span>
-                            <span>R$ <span id="pr_3">120,00</span></span>
-                        </button>
-                        <button class="sub-btn" id="btn_plan6">
-                            <span>6 meses</span>
-                            <span>R$ <span id="pr_6">240,00</span></span>
-                        </button>
-                    </div>
+                    <button class="sub-btn" id="btn_plan3"><span>3 meses</span><span>R$ <span id="pr_3">120,00</span></span></button>
+                    <button class="sub-btn" id="btn_plan6"><span>6 meses</span><span>R$ <span id="pr_6">240,00</span></span></button>
                 </div>
             </div>
         </div>
 
-        <!-- TABS -->
         <div class="tabs-card">
-            <div id="tab_btn_posts" class="tab active" onclick="switchTab('posts')">
-                <i class="fas fa-mobile-alt"></i> 15 Postagens
-            </div>
-            <div id="tab_btn_media" class="tab" onclick="switchTab('media')">
-                <i class="far fa-play-circle"></i> 25 Mídias
-            </div>
+            <div id="tab_btn_posts" class="tab active" onclick="switchTab('posts')"><i class="fas fa-mobile-alt"></i> 15 Postagens</div>
+            <div id="tab_btn_media" class="tab" onclick="switchTab('media')"><i class="far fa-play-circle"></i> 25 Mídias</div>
         </div>
 
-        <!-- FEED CARD (LOCKED) -->
         <div class="feed-card" id="feed_card_area">
             <div class="feed-header">
                 <div class="feed-user">
                     <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
-                    <div class="feed-name-group">
-                        <span class="feed-name feed-name-sync">Sayuri</span>
-                        <span class="feed-username feed-username-sync">@Sayurijesus</span>
-                    </div>
-                </div>
-                <div class="more-options">
-                    <i class="fas fa-ellipsis-v"></i>
+                    <div class="feed-name-group"><span class="feed-name feed-name-sync">Sayuri</span><span class="feed-username feed-username-sync">@Sayurijesus</span></div>
                 </div>
             </div>
-
-            <!-- LOCKED AREA -->
             <div class="locked-content" id="feed_locked_area">
                 <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
                     <img id="locked_bg_main" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                     <video id="locked_vid_main" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                 </div>
-                <!-- Arcs implementation -->
-                <div class="arc-circle arc-1"></div>
-                <div class="arc-circle arc-2"></div>
-                <div class="arc-circle arc-3"></div>
-                
-                <div class="lock-wrapper">
-                    <svg class="lock-svg" viewBox="0 0 100 110">
-                        <path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" />
-                        <rect x="22" y="46" width="56" height="42" rx="14" />
-                        <path d="M 50,64 V 68" />
-                    </svg>
-                </div>
-                
-                <div class="locked-stats">
-                    <div class="stat-item"><i class="far fa-image"></i> <span id="stat_ph_feed">20</span></div>
-                    <div class="stat-item"><i class="fas fa-video"></i> <span id="stat_vi_feed">5</span></div>
-                    <div class="stat-item"><i class="fas fa-lock"></i> <span id="stat_lo_feed">12</span></div>
-                    <div class="stat-item"><i class="far fa-heart"></i> <span id="stat_he_feed">32</span></div>
-                </div>
-            </div>
-
-            <div class="feed-footer">
-                <div class="footer-actions">
-                    <i class="far fa-heart"></i>
-                    <i class="far fa-comment"></i>
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
-                <div class="save-post">
-                    <i class="far fa-bookmark"></i>
-                </div>
+                <div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div>
             </div>
         </div>
 
-        <!-- MEDIA LIST AREA (5 Locked Cards) -->
         <div class="media-list-area" id="media_list_area" style="display: none; flex-direction: column; gap: 15px;">
-            <!-- Repeat Feed Card 5 times -->
-            <div class="feed-card" style="margin-bottom: 0;">
-                <div class="feed-header">
-                    <div class="feed-user">
-                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
-                        <div class="feed-name-group">
-                            <span class="feed-name feed-name-sync">Sayuri</span>
-                            <span class="feed-username feed-username-sync">@Sayurijesus</span>
-                        </div>
-                    </div>
-                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
-                </div>
-                <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
-                        <img id="locked_bg_m1" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
-                        <video id="locked_vid_m1" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
-                    </div>
-                    <div class="arc-circle arc-1"></div>
-                    <div class="lock-wrapper">
-                        <svg class="lock-svg" viewBox="0 0 100 110">
-                            <path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" />
-                            <rect x="22" y="46" width="56" height="42" rx="14" />
-                            <path d="M 50,64 V 68" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="feed-footer">
-                    <div class="footer-actions">
-                        <i class="far fa-heart"></i>
-                        <i class="far fa-comment"></i>
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <div class="save-post"><i class="far fa-bookmark"></i></div>
-                </div>
-            </div>
-            <!-- Item 2 -->
-            <div class="feed-card" style="margin-bottom: 0;">
-                <div class="feed-header">
-                    <div class="feed-user">
-                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
-                        <div class="feed-name-group">
-                            <span class="feed-name feed-name-sync">Sayuri</span>
-                            <span class="feed-username feed-username-sync">@Sayurijesus</span>
-                        </div>
-                    </div>
-                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
-                </div>
-                <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
-                        <img id="locked_bg_m2" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
-                        <video id="locked_vid_m2" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
-                    </div>
-                    <div class="arc-circle arc-1"></div>
-                    <div class="lock-wrapper">
-                        <svg class="lock-svg" viewBox="0 0 100 110">
-                            <path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" />
-                            <rect x="22" y="46" width="56" height="42" rx="14" />
-                            <path d="M 50,64 V 68" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="feed-footer">
-                    <div class="footer-actions"><i class="far fa-heart"></i> <i class="far fa-comment"></i> <i class="fas fa-dollar-sign"></i></div>
-                    <div class="save-post"><i class="far fa-bookmark"></i></div>
-                </div>
-            </div>
-            <!-- Item 3 -->
-            <div class="feed-card" style="margin-bottom: 0;">
-                <div class="feed-header">
-                    <div class="feed-user">
-                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
-                        <div class="feed-name-group">
-                            <span class="feed-name feed-name-sync">Sayuri</span>
-                            <span class="feed-username feed-username-sync">@Sayurijesus</span>
-                        </div>
-                    </div>
-                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
-                </div>
-                <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
-                        <img id="locked_bg_m3" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
-                        <video id="locked_vid_m3" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
-                    </div>
-                    <div class="arc-circle arc-1"></div>
-                    <div class="lock-wrapper">
-                        <svg class="lock-svg" viewBox="0 0 100 110">
-                            <path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" />
-                            <rect x="22" y="46" width="56" height="42" rx="14" />
-                            <path d="M 50,64 V 68" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="feed-footer">
-                    <div class="footer-actions"><i class="far fa-heart"></i> <i class="far fa-comment"></i> <i class="fas fa-dollar-sign"></i></div>
-                    <div class="save-post"><i class="far fa-bookmark"></i></div>
-                </div>
-            </div>
-            <!-- Item 4 -->
-            <div class="feed-card" style="margin-bottom: 0;">
-                <div class="feed-header">
-                    <div class="feed-user">
-                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
-                        <div class="feed-name-group">
-                            <span class="feed-name feed-name-sync">Sayuri</span>
-                            <span class="feed-username feed-username-sync">@Sayurijesus</span>
-                        </div>
-                    </div>
-                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
-                </div>
-                <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
-                        <img id="locked_bg_m4" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
-                        <video id="locked_vid_m4" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
-                    </div>
-                    <div class="arc-circle arc-1"></div>
-                    <div class="lock-wrapper">
-                        <svg class="lock-svg" viewBox="0 0 100 110">
-                            <path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" />
-                            <rect x="22" y="46" width="56" height="42" rx="14" />
-                            <path d="M 50,64 V 68" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="feed-footer">
-                    <div class="footer-actions"><i class="far fa-heart"></i> <i class="far fa-comment"></i> <i class="fas fa-dollar-sign"></i></div>
-                    <div class="save-post"><i class="far fa-bookmark"></i></div>
-                </div>
-            </div>
-            <!-- Item 5 -->
-            <div class="feed-card" style="margin-bottom: 0;">
-                <div class="feed-header">
-                    <div class="feed-user">
-                        <img src="images/avatar_placeholder.jpg" class="feed-avatar feed-avatar-sync" alt="Avatar">
-                        <div class="feed-name-group">
-                            <span class="feed-name feed-name-sync">Sayuri</span>
-                            <span class="feed-username feed-username-sync">@Sayurijesus</span>
-                        </div>
-                    </div>
-                    <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
-                </div>
-                <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
-                        <img id="locked_bg_m5" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
-                        <video id="locked_vid_m5" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
-                    </div>
-                    <div class="arc-circle arc-1"></div>
-                    <div class="lock-wrapper">
-                        <svg class="lock-svg" viewBox="0 0 100 110">
-                            <path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" />
-                            <rect x="22" y="46" width="56" height="42" rx="14" />
-                            <path d="M 50,64 V 68" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="feed-footer">
-                    <div class="footer-actions"><i class="far fa-heart"></i> <i class="far fa-comment"></i> <i class="fas fa-dollar-sign"></i></div>
-                    <div class="save-post"><i class="far fa-bookmark"></i></div>
-                </div>
-            </div>
+             <!-- Dinamicamente preenchido pelo script -->
+             <div class="feed-card"><div class="locked-content"><div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);"><img id="locked_bg_m1" src="" style="width:100%; height:100%; object-fit:cover; display:none;"><video id="locked_vid_m1" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video></div><div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div></div></div>
+             <div class="feed-card"><div class="locked-content"><div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);"><img id="locked_bg_m2" src="" style="width:100%; height:100%; object-fit:cover; display:none;"><video id="locked_vid_m2" src="" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video></div><div class="lock-wrapper"><svg class="lock-svg" viewBox="0 0 100 110"><path d="M 32,46 V 26 A 18,18 0 0 1 68,26 V 46" /><rect x="22" y="46" width="56" height="42" rx="14" /><path d="M 50,64 V 68" /></svg></div></div></div>
         </div>
     </div>
 
-    <script>
-        function togglePromo() {
-            const plans = document.getElementById('promo-plans');
-            const arrow = document.getElementById('promo-arrow');
-            if (plans.style.display === 'none') {
-                plans.style.display = 'block';
-                arrow.classList.remove('fa-chevron-down');
-                arrow.classList.add('fa-chevron-up');
-            } else {
-                plans.style.display = 'none';
-                arrow.classList.remove('fa-chevron-up');
-                arrow.classList.add('fa-chevron-down');
-            }
-        }
-
-        function loadProfile(data) {
-            if (!data) return;
-            if (data.n) {
-                document.getElementById('prof_name').innerText = data.n;
-                const syncNames = document.querySelectorAll('.feed-name-sync');
-                syncNames.forEach(el => el.innerText = data.n);
-            }
-            if (data.u) {
-                document.getElementById('prof_username').innerText = data.u;
-                const syncUsernames = document.querySelectorAll('.feed-username-sync');
-                syncUsernames.forEach(el => el.innerText = data.u);
-            }
-            if (data.b) document.getElementById('prof_bio').innerText = data.b;
-            if (data.ph) {
-                document.getElementById('stat_ph').innerText = data.ph;
-                if(document.getElementById('stat_ph_feed')) document.getElementById('stat_ph_feed').innerText = data.ph;
-            }
-            if (data.vi) {
-                document.getElementById('stat_vi').innerText = data.vi;
-                if(document.getElementById('stat_vi_feed')) document.getElementById('stat_vi_feed').innerText = data.vi;
-            }
-            if (data.lo) {
-                if(document.getElementById('stat_lo')) document.getElementById('stat_lo').innerText = data.lo;
-                if(document.getElementById('stat_lo_feed')) document.getElementById('stat_lo_feed').innerText = data.lo;
-            }
-            if (data.he) {
-                if(document.getElementById('stat_he')) document.getElementById('stat_he').innerText = data.he;
-                if(document.getElementById('stat_he_feed')) document.getElementById('stat_he_feed').innerText = data.he;
-            }
-            if (data.p1) document.getElementById('pr_1').innerText = data.p1;
-            if (data.p3) document.getElementById('pr_3').innerText = data.p3;
-            if (data.p6) document.getElementById('pr_6').innerText = data.p6;
-
-            // Stats in tabs
-            if (data.ph) {
-                const tabPh = document.getElementById('tab_btn_posts');
-                if (tabPh) tabPh.innerHTML = `<i class="fas fa-mobile-alt"></i> ${data.ph} Postagens`;
-            }
-            if (data.vi) {
-                const tabVi = document.getElementById('tab_btn_media');
-                if (tabVi) tabVi.innerHTML = `<i class="far fa-play-circle"></i> ${data.vi} Mídias`;
-            }
-
-            const avatar = data.av || 'images/avatar_placeholder.jpg';
-            document.getElementById('prof_avatar').src = avatar;
-            const syncAvatars = document.querySelectorAll('.feed-avatar-sync');
-            syncAvatars.forEach(el => el.src = avatar);
-            const cover = data.co || 'images/cover_placeholder.jpg';
-            document.getElementById('prof_cover').src = cover;
-            
-            // Checkouts
-            if (data.ckb) document.getElementById('suitpayBanner').src = data.ckb;
-            if (data.cka) document.getElementById('suitpayAvatar').src = data.cka;
-            if (data.n) {
-                const modalModelName = document.getElementById('suitpayModelName');
-                if (modalModelName) modalModelName.innerText = data.u || data.n;
-            }
-            if (data.ckmt) {
-                document.getElementById('suitpayMiniText').innerText = data.ckmt;
-                document.getElementById('suitpayMiniText').style.display = 'block';
-            } else {
-                document.getElementById('suitpayMiniText').style.display = 'none';
-            }
-            if (data.ckanc) {
-                document.getElementById('suitpayAnchor').innerText = data.ckanc;
-                document.getElementById('suitpayAnchor').style.display = 'block';
-            } else {
-                document.getElementById('suitpayAnchor').style.display = 'none';
-            }
-            if (data.ckton) {
-                document.getElementById('suitpayTimerArea').style.display = 'block';
-                
-                // If value changed or interval not started, reset timer
-                const newCkt = (data.ckt || '15').toString();
-                if (window.lastCkt !== newCkt) {
-                    window.lastCkt = newCkt;
-                    if (window.timerInterval) { clearInterval(window.timerInterval); window.timerInterval = null; }
-                    
-                    let timeParts = newCkt.split(':');
-                    let mins = parseInt(timeParts[0]) || 0;
-                    let secs = timeParts.length > 1 ? parseInt(timeParts[1]) : 0;
-                    let totalSecs = mins * 60 + secs;
-                    
-                    // Immediately update display
-                    let m = Math.floor(totalSecs / 60).toString().padStart(2, '0');
-                    let s = (totalSecs % 60).toString().padStart(2, '0');
-                    document.getElementById('suitpayTimer').innerText = m + ':' + s;
-                    
-                    window.timerInterval = setInterval(() => {
-                        if (totalSecs <= 0) {
-                            clearInterval(window.timerInterval);
-                            window.timerInterval = null;
-                        } else {
-                            totalSecs--;
-                            let m = Math.floor(totalSecs / 60).toString().padStart(2, '0');
-                            let s = (totalSecs % 60).toString().padStart(2, '0');
-                            document.getElementById('suitpayTimer').innerText = m + ':' + s;
-                        }
-                    }, 1000);
-                }
-            } else {
-                document.getElementById('suitpayTimerArea').style.display = 'none';
-                if (window.timerInterval) { clearInterval(window.timerInterval); window.timerInterval = null; window.lastCkt = null; }
-            }
-
-            // Media setup function
-            const setMedia = (id, url) => {
-                const img = document.getElementById('locked_bg_' + id);
-                const vid = document.getElementById('locked_vid_' + id);
-                if (!img || !vid) return;
-
-                const parent = img.closest('.locked-content') || img.closest('.feed-card');
-                const arc = parent ? parent.querySelector('.arc-circle') : null;
-
-                img.style.display = 'none';
-                vid.style.display = 'none';
-                
-                if (!url) {
-                    if(arc) arc.style.display = 'block';
-                    return;
-                }
-
-                if(arc) arc.style.display = 'none';
-
-                if (url.includes('video/') || url.endsWith('.mp4') || url.startsWith('data:video')) {
-                    vid.src = url;
-                    vid.style.display = 'block';
-                } else {
-                    img.src = url;
-                    img.style.display = 'block';
-                }
-            };
-
-            setMedia('main', data.bl || data.vd); // Fallback do blur para a própria mídia do feed
-            setMedia('m1', data.m1);
-            setMedia('m2', data.m2);
-            setMedia('m3', data.m3);
-            setMedia('m4', data.m4);
-            setMedia('m5', data.m5);
-
-            const setupPlan = (id, link) => {
-                const btn = document.getElementById(id);
-                if (!btn) return;
-                
-                btn.onclick = () => {
-                    // Se houver um link externo configurado, usa ele em vez do modal
-                    if (link && link.startsWith('http')) {
-                        window.location.href = link;
-                        return;
-                    }
-                    
-                    const priceSpan = btn.querySelector('span:nth-child(2) span');
-                    const planNameSpan = btn.querySelector('span:nth-child(1)');
-                    if(!priceSpan || !planNameSpan) return;
-                    const planName = planNameSpan.innerText;
-                    const price = priceSpan.innerText;
-                    if (typeof openSuitPayModal === 'function') openSuitPayModal(planName, price);
-                };
-                btn.style.cursor = 'pointer';
-            };
-            setupPlan('btn_plan1', data.l1);
-            setupPlan('btn_plan3', data.l3);
-            setupPlan('btn_plan6', data.l6);
-
-            const igBtn = document.getElementById('link_instagram');
-            if (data.ig) {
-                let igLink = data.ig;
-                if (!igLink.startsWith('http')) {
-                    igLink = 'https://instagram.com/' + igLink.replace('@', '');
-                }
-                igBtn.href = igLink;
-                igBtn.style.display = 'inline-block';
-            } else {
-                igBtn.style.display = 'none';
-            }
-        }
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const encoded = urlParams.get('d');
-        if (encoded) {
-            try {
-                const decodedStr = decodeURIComponent(encoded);
-                const jsonStr = decodeURIComponent(escape(atob(decodedStr)));
-                loadProfile(JSON.parse(jsonStr));
-            } catch (e) {
-                console.error("Error decoding profile data", e);
-            }
-        } else {
-            // Fetch from server instead of just localStorage
-            fetch('/api/load-config')
-                .then(res => res.json())
-                .then(data => {
-                    if (Object.keys(data).length > 0) {
-                        loadProfile(data);
-                    } else {
-                        const saved = localStorage.getItem('profileData');
-                        if (saved) loadProfile(JSON.parse(saved));
-                    }
-                })
-                .catch(e => {
-                    console.error("Error loading config from server", e);
-                    const saved = localStorage.getItem('profileData');
-                    if (saved) loadProfile(JSON.parse(saved));
-                });
-        }
-
-        window.addEventListener('message', (event) => {
-            if (event.data.type === 'UPDATE_PROFILE') loadProfile(event.data.data);
-        });
-
-        // Sincronização robusta via LocalStorage para preview local
-        window.addEventListener('storage', (event) => {
-            if (event.key === 'profileData' && event.newValue) {
-                loadProfile(JSON.parse(event.newValue));
-            }
-        });
-    </script>
-    <!-- SUITPAY CHECKOUT MODAL -->
+    <!-- MODAL CHECKOUT -->
     <div id="suitpayModal" class="suitpay-modal-overlay" style="display: none;">
         <div class="suitpay-modal-container">
             <div class="suitpay-modal-header">
@@ -560,76 +89,145 @@
             </div>
             <div class="suitpay-modal-body">
                 <h3 id="suitpayPlanName">Assinatura</h3>
-                <div style="font-size: 0.9rem; color: #999; text-decoration: line-through; margin-top: 5px; display: none;" id="suitpayAnchor"></div>
-                <p id="suitpayPlanPrice" class="suitpay-price" style="margin-top: 0;">R$ 0,00</p>
-                <p style="font-size: 0.8rem; color: #28a745; margin-top: -15px; margin-bottom: 15px; display: none;" id="suitpayMiniText"></p>
-                <div id="suitpayTimerArea" style="text-align: center; font-size: 0.85rem; margin-bottom: 20px; border-radius: 8px; display: none;">
-                    <i class="fas fa-clock"></i> Oferta expira em: <span id="suitpayTimer">15:00</span>
-                </div>
-                
-                <form id="suitpayForm" onsubmit="handleSuitPaySubmit(event)">
-                    <div class="suitpay-input-group">
-                        <label>Nome Completo</label>
-                        <input type="text" id="spName" required placeholder="Seu nome">
-                    </div>
-                    <div class="suitpay-input-group">
-                        <label>E-mail</label>
-                        <input type="email" id="spEmail" required placeholder="seu@email.com">
-                    </div>
-                    <div class="suitpay-input-group">
-                        <label>CPF</label>
-                        <input type="text" id="spCpf" required placeholder="000.000.000-00" oninput="maskCpf(this)">
-                    </div>
-                    <button type="submit" id="spSubmitBtn" class="suitpay-submit-btn">
-                        <span>Gerar Pix</span>
-                    </button>
-                    <p class="suitpay-secure-info">
-                        <i class="fas fa-lock"></i> Pagamento seguro! Seus dados estão protegidos e criptografados.
-                    </p>
+                <p id="suitpayPlanPrice" class="suitpay-price">R$ 0,00</p>
+                <form id="suitpayForm" onsubmit="handlePushinPaySubmit(event)">
+                    <div class="suitpay-input-group"><label>Nome Completo</label><input type="text" id="spName" required placeholder="Seu nome"></div>
+                    <div class="suitpay-input-group"><label>E-mail</label><input type="email" id="spEmail" required placeholder="seu@email.com"></div>
+                    <button type="submit" id="spSubmitBtn" class="suitpay-submit-btn"><span>Gerar Pix</span></button>
                 </form>
-
                 <div id="suitpayPixArea" style="display: none;">
                     <h4>Pagamento via Pix</h4>
-                    <p>Escaneie o QR Code abaixo ou copie o código PIX.</p>
                     <img id="spQrCode" src="" alt="QR Code Pix" style="max-width: 200px; display: block; margin: 0 auto;">
                     <input type="text" id="spCopyPaste" readonly>
                     <button onclick="copyPixCode()" class="suitpay-copy-btn">Copiar Código Pix</button>
-                </div>
-
-                <div class="suitpay-footer-logo">
-                    <img src="images/logo-black.svg" alt="Privacy">
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="js/checkout.js"></script>
     <script>
-        function switchTab(tabName) {
-            document.getElementById('tab_btn_posts').classList.remove('active');
-            document.getElementById('tab_btn_media').classList.remove('active');
-            
-            if (tabName === 'posts') {
-                document.getElementById('tab_btn_posts').classList.add('active');
-                document.getElementById('feed_card_area').style.display = 'block';
-                document.getElementById('media_list_area').style.display = 'none';
-            } else {
-                document.getElementById('tab_btn_media').classList.add('active');
-                document.getElementById('feed_card_area').style.display = 'none';
-                document.getElementById('media_list_area').style.display = 'flex';
+        // --- LÓGICA DE CHECKOUT E PERFIL ---
+        let currentPlanPrice = 29.90;
+
+        function openSuitPayModal(planName, priceStr) {
+            document.getElementById('suitpayPlanName').innerText = 'Assinatura - ' + planName;
+            document.getElementById('suitpayPlanPrice').innerText = 'R$ ' + priceStr;
+            currentPlanPrice = parseFloat(priceStr.replace('.', '').replace(',', '.'));
+            document.getElementById('suitpayForm').style.display = 'block';
+            document.getElementById('suitpayPixArea').style.display = 'none';
+            document.getElementById('suitpayModal').style.display = 'flex';
+        }
+
+        function closeSuitPayModal() { document.getElementById('suitpayModal').style.display = 'none'; }
+
+        async function handlePushinPaySubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('spName').value;
+            const email = document.getElementById('spEmail').value;
+            const btn = document.getElementById('spSubmitBtn');
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando PIX...';
+            btn.disabled = true;
+
+            try {
+                const payload = { amount: currentPlanPrice, client: { name, email } };
+                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const backendUrl = (isLocal && window.location.port !== '3030') ? 'http://localhost:3030/pagamento' : '/pagamento';
+                
+                const response = await fetch(backendUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Erro ao processar pagamento.');
+                }
+
+                const data = await response.json();
+                if (data.qr_code) {
+                    document.getElementById('suitpayForm').style.display = 'none';
+                    document.getElementById('suitpayPixArea').style.display = 'block';
+                    const qrRaw = data.qr_code;
+                    document.getElementById('spQrCode').src = qrRaw.startsWith('data:') ? qrRaw : 'data:image/png;base64,' + qrRaw;
+                    document.getElementById('spCopyPaste').value = data.pay_in_code || '';
+                } else {
+                    throw new Error('Falha ao gerar o código do PIX.');
+                }
+            } catch(err) {
+                alert('ERRO AO GERAR PIX:\n' + err.message);
+            } finally {
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.sub-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const priceSpan = btn.querySelector('span:nth-child(2) span');
-                    const planNameSpan = btn.querySelector('span:nth-child(1)');
-                    if(!priceSpan || !planNameSpan) return;
-                    const planName = planNameSpan.innerText;
-                    const price = priceSpan.innerText;
-                    if (typeof openSuitPayModal === 'function') openSuitPayModal(planName, price);
-                });
+        function copyPixCode() {
+            const copyText = document.getElementById('spCopyPaste');
+            if(!copyText || !copyText.value) return;
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value).then(() => alert('Código PIX copiado!'));
+        }
+
+        function switchTab(tabName) {
+            document.getElementById('tab_btn_posts').classList.toggle('active', tabName === 'posts');
+            document.getElementById('tab_btn_media').classList.toggle('active', tabName === 'media');
+            document.getElementById('feed_card_area').style.display = tabName === 'posts' ? 'block' : 'none';
+            document.getElementById('media_list_area').style.display = tabName === 'media' ? 'flex' : 'none';
+        }
+
+        function loadProfile(data) {
+            if (!data) return;
+            const avatar = data.av || data.avatar || 'images/avatar_placeholder.jpg';
+            const cover = data.co || data.cover || 'images/cover_placeholder.jpg';
+            document.getElementById('prof_name').innerText = data.n || '';
+            document.getElementById('prof_username').innerText = data.u || '';
+            document.getElementById('prof_bio').innerText = data.b || '';
+            document.getElementById('prof_avatar').src = avatar;
+            document.getElementById('prof_cover').src = cover;
+            document.getElementById('suitpayAvatar').src = avatar;
+            document.getElementById('suitpayBanner').src = cover;
+            document.getElementById('stat_ph').innerText = data.ph || '0';
+            document.getElementById('stat_vi').innerText = data.vi || '0';
+            document.getElementById('stat_lo').innerText = data.lo || '0';
+            document.getElementById('stat_he').innerText = data.he || '0';
+            document.getElementById('pr_1').innerText = data.p1 || '40,00';
+            document.getElementById('pr_3').innerText = data.p3 || '120,00';
+            document.getElementById('pr_6').innerText = data.p6 || '240,00';
+            
+            const setMedia = (id, url) => {
+                const img = document.getElementById('locked_bg_' + id);
+                const vid = document.getElementById('locked_vid_' + id);
+                if (!img || !vid) return;
+                img.style.display = 'none'; vid.style.display = 'none';
+                if (!url) return;
+                if (url.includes('video/') || url.endsWith('.mp4')) { vid.src = url; vid.style.display = 'block'; }
+                else { img.src = url; img.style.display = 'block'; }
+            };
+            setMedia('main', data.bl || data.vd);
+            setMedia('m1', data.m1); setMedia('m2', data.m2);
+        }
+
+        function initButtons() {
+            ['btn_plan1', 'btn_plan3', 'btn_plan6'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) btn.onclick = () => {
+                    const price = btn.querySelector('span:nth-child(2) span').innerText;
+                    const name = btn.querySelector('span:nth-child(1)').innerText;
+                    openSuitPayModal(name, price);
+                };
+            });
+        }
+
+        window.addEventListener('load', () => {
+            initButtons();
+            fetch('/api/load-config').then(res => res.json()).then(data => {
+                if (Object.keys(data).length > 0) loadProfile(data);
+                else {
+                    const saved = localStorage.getItem('profileData');
+                    if (saved) loadProfile(JSON.parse(saved));
+                }
             });
         });
     </script>

@@ -36,10 +36,8 @@ const inputs = {
     ck_timer_on: document.getElementById('input_ck_timer_on'),
     ck_time: document.getElementById('input_ck_time'),
     
-    // SyncPay Config
-    syncpay_id: document.getElementById('input_syncpay_id'),
-    syncpay_secret: document.getElementById('input_syncpay_secret'),
-    syncpay_url: document.getElementById('input_syncpay_url')
+    // PushinPay Token field (reused from syncpay_secret in db.json for compatibility)
+    pushinpay_token: document.getElementById('input_syncpay_secret')
 };
 
 const uploads = {
@@ -62,8 +60,6 @@ window.addEventListener('load', async () => {
     try {
         const response = await fetch('/api/load-config');
         const data = await response.json();
-        
-        // If server has data, use it. Otherwise try localStorage as fallback.
         const finalData = Object.keys(data).length > 0 ? data : JSON.parse(localStorage.getItem('profileData') || '{}');
 
         if (finalData) {
@@ -100,9 +96,7 @@ window.addEventListener('load', async () => {
             if(inputs.ck_timer_on) inputs.ck_timer_on.checked = finalData.ckton !== false;
             if(inputs.ck_time) inputs.ck_time.value = finalData.ckt || '15';
 
-            if(inputs.syncpay_id) inputs.syncpay_id.value = finalData.syncpay_id || '';
-            if(inputs.syncpay_secret) inputs.syncpay_secret.value = finalData.syncpay_secret || '';
-            if(inputs.syncpay_url) inputs.syncpay_url.value = finalData.syncpay_url || 'https://api.syncpayments.com.br';
+            if(inputs.pushinpay_token) inputs.pushinpay_token.value = finalData.syncpay_secret || '';
         }
     } catch (e) {
         console.error('Erro ao carregar do servidor:', e);
@@ -110,15 +104,10 @@ window.addEventListener('load', async () => {
     updatePreview();
 });
 
-// Adiciona listener para carregar o preview quando o iframe terminar de carregar
 if (iframe) {
-    iframe.onload = () => {
-        console.log('✅ Iframe carregado, enviando dados iniciais...');
-        updatePreview();
-    };
+    iframe.onload = () => updatePreview();
 }
 
-// Update preview on any input change
 Object.values(inputs).forEach(input => {
     if(input) {
         input.addEventListener('input', updatePreview);
@@ -126,13 +115,12 @@ Object.values(inputs).forEach(input => {
     }
 });
 
-// Handle File Uploads - NOVO (Envia para o Servidor)
+// File Uploads
 Object.keys(uploads).forEach(key => {
     if(uploads[key]) {
         uploads[key].addEventListener('change', async function(e) {
             const file = e.target.files[0];
             if (!file) return;
-
             const label = e.target.previousElementSibling;
             const originalIcon = label.innerHTML;
             label.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
@@ -141,16 +129,10 @@ Object.keys(uploads).forEach(key => {
             formData.append('file', file);
 
             try {
-                const response = await fetch('/api/upload', {
-                    method: 'POST',
-                    body: formData
-                });
+                const response = await fetch('/api/upload', { method: 'POST', body: formData });
                 const result = await response.json();
-                
                 if (result.url) {
-                    const fileUrl = result.url; // Use caminho relativo (/uploads/...)
-                    
-                    // Mapeamento direto
+                    const fileUrl = result.url;
                     if (key === 'avatar') inputs.avatar.value = fileUrl;
                     else if (key === 'cover') inputs.cover.value = fileUrl;
                     else if (key === 'video') inputs.video_feed.value = fileUrl;
@@ -161,11 +143,8 @@ Object.keys(uploads).forEach(key => {
                     else if (key === 'media5') inputs.media5.value = fileUrl;
                     else if (key === 'ck_banner') inputs.ck_banner.value = fileUrl;
                     else if (key === 'ck_avatar') inputs.ck_avatar.value = fileUrl;
-                    
                     label.innerHTML = '<i class="fas fa-check"></i>';
-                } else {
-                    throw new Error('Falha no upload');
-                }
+                } else { throw new Error('Falha no upload'); }
             } catch (err) {
                 console.error(err);
                 label.innerHTML = '<i class="fas fa-times"></i>';
@@ -198,38 +177,30 @@ function getData() {
         ck: inputs.cookies ? inputs.cookies.checked : true,
         ig: inputs.instagram ? inputs.instagram.value : '',
         lb: inputs.langBtn ? inputs.langBtn.checked : true,
-        bl: inputs.video_feed ? inputs.video_feed.value : '', // Agora o blur segue a mídia do feed
-        
+        bl: inputs.video_feed ? inputs.video_feed.value : '',
         m1: inputs.media1 ? inputs.media1.value : '',
         m2: inputs.media2 ? inputs.media2.value : '',
         m3: inputs.media3 ? inputs.media3.value : '',
         m4: inputs.media4 ? inputs.media4.value : '',
         m5: inputs.media5 ? inputs.media5.value : '',
-        
         ckb: inputs.ck_banner ? inputs.ck_banner.value : '',
         cka: inputs.ck_avatar ? inputs.ck_avatar.value : '',
         ckmt: inputs.ck_minitext ? inputs.ck_minitext.value : '',
         ckanc: inputs.ck_anchor ? inputs.ck_anchor.value : '',
         ckton: inputs.ck_timer_on ? inputs.ck_timer_on.checked : true,
-        ckt: inputs.ck_time ? inputs.ck_time.value : '',
-        
-        syncpay_id: inputs.syncpay_id ? inputs.syncpay_id.value : '',
-        syncpay_secret: inputs.syncpay_secret ? inputs.syncpay_secret.value : '',
-        syncpay_url: inputs.syncpay_url ? inputs.syncpay_url.value : ''
+        ckt: inputs.ck_time ? inputs.ck_time.value : '15',
+        syncpay_secret: inputs.pushinpay_token ? inputs.pushinpay_token.value : ''
     };
 }
 
 function updatePreview(forceReload = false) {
-    console.log('🔄 Atualizando Preview...');
     const data = getData();
-    
     if (forceReload && iframe) {
         const currentSrc = iframe.src;
         iframe.src = '';
         iframe.src = currentSrc;
-        return; // O iframe.onload se encarregará de chamar updatePreview() novamente
+        return;
     }
-
     if (iframe && iframe.contentWindow) {
         iframe.contentWindow.postMessage({ type: 'UPDATE_PROFILE', data }, '*');
     }
@@ -237,43 +208,29 @@ function updatePreview(forceReload = false) {
 
 async function saveData(e) {
     const data = getData();
-    const btn = (e && e.currentTarget) || (window.event && window.event.currentTarget) || document.querySelector('button[onclick*="saveData"]');
+    const btn = (e && e.currentTarget) || document.querySelector('button[onclick*="saveData"]');
     const originalText = btn ? btn.innerHTML : 'Salvar';
-
     if (btn) {
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
         btn.disabled = true;
     }
-
     try {
         const response = await fetch('/api/save-config', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
-        
         if (response.ok) {
-            // Salva no localStorage como backup local para o preview imediato
             localStorage.setItem('profileData', JSON.stringify(data));
-            
-            if (btn) {
-                btn.innerHTML = '<i class="fas fa-check"></i> Salvo!';
-                btn.style.background = '#28a745';
-            }
-        } else {
-            throw new Error('Erro ao salvar no servidor');
-        }
+            if (btn) { btn.innerHTML = '<i class="fas fa-check"></i>'; btn.style.background = '#28a745'; }
+        } else { throw new Error('Erro ao salvar'); }
     } catch (e) {
         console.error(e);
-        alert('Erro ao salvar no servidor. Usando cache local temporário.');
         localStorage.setItem('profileData', JSON.stringify(data));
     } finally {
         if (btn) {
             btn.disabled = false;
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = '#444';
-            }, 2000);
+            setTimeout(() => { btn.innerHTML = originalText; btn.style.background = '#444'; }, 2000);
         }
         updatePreview();
     }
@@ -286,145 +243,55 @@ function generateLink() {
     const url = new URL(window.location.href);
     const path = url.pathname.substring(0, url.pathname.lastIndexOf('/') + 1);
     const finalUrl = `${url.origin}${path}profile.html?d=${encodeURIComponent(encoded)}`;
-
-    copyToClipboard(finalUrl).then(() => {
-        alert('Link gerado e copiado!');
-    }).catch(err => {
-        prompt('Link gerado (Copie manualmente):', finalUrl);
-    });
-}
-
-function copyToClipboard(text) {
-    if (navigator.clipboard) return navigator.clipboard.writeText(text);
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    return Promise.resolve();
+    navigator.clipboard.writeText(finalUrl).then(() => alert('Link copiado!'));
 }
 
 async function exportZip() {
     const data = getData();
-
-    if (!data.syncpay_id || !data.syncpay_secret) {
-        if (!confirm('ATENÇÃO: Você não preencheu as Configurações SyncPay. O pagamento no ZIP exportado NÃO funcionará até você configurar. Deseja baixar assim mesmo?')) {
-            return;
-        }
+    if (!data.syncpay_secret) {
+        if (!confirm('Token PushinPay não preenchido. O PIX não funcionará no ZIP. Deseja continuar?')) return;
     }
-
-    localStorage.setItem('profileData', JSON.stringify(data));
     const zip = new JSZip();
-    
     const btn = document.querySelector('button[onclick="exportZip()"]');
-    const originalText = btn ? btn.innerHTML : 'ZIP';
-    if(btn) {
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando...';
-        btn.disabled = true;
-    }
+    if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; btn.disabled = true; }
 
     try {
-        // 1. Fetch de arquivos básicos
         const response = await fetch('profile.html');
         let htmlContent = await response.text();
-        
-        // Sanatize data for ZIP (convert absolute URLs to relative)
         const zipData = JSON.parse(JSON.stringify(data));
         const mediaUrls = [];
-
         const sanitizeUrl = (url) => {
-            if (!url || typeof url !== 'string') return url;
-            if (url.includes('/uploads/')) {
-                const relativePath = 'uploads/' + url.split('/uploads/').pop();
-                mediaUrls.push({ original: url, zipPath: relativePath });
-                return relativePath;
-            }
-            return url;
+            if (!url || typeof url !== 'string' || !url.includes('/uploads/')) return url;
+            const relativePath = 'uploads/' + url.split('/uploads/').pop();
+            mediaUrls.push({ original: url, zipPath: relativePath });
+            return relativePath;
         };
-
-        // Mapear todos os campos de mídia
         const mediaKeys = ['av', 'co', 'vd', 'bl', 'm1', 'm2', 'm3', 'm4', 'm5', 'ckb', 'cka'];
         mediaKeys.forEach(k => { zipData[k] = sanitizeUrl(zipData[k]); });
 
-        // Ensure SyncPay keys are in the preloaded data for the ZIP's .env.example
-        zipData.syncpay_id = inputs.syncpay_id ? inputs.syncpay_id.value : '';
-        zipData.syncpay_secret = inputs.syncpay_secret ? inputs.syncpay_secret.value : '';
-        zipData.syncpay_url = inputs.syncpay_url ? inputs.syncpay_url.value : 'https://api.syncpayments.com.br';
-
-        const scriptBake = `
-        <script>
-            const preloadedData = ${JSON.stringify(zipData)};
-            window.addEventListener('load', () => {
-                if (typeof loadProfile === 'function') loadProfile(preloadedData);
-            });
-        <\/script>
-        `;
+        const scriptBake = `<script>const preloadedData = ${JSON.stringify(zipData)}; window.addEventListener('load', () => { if (typeof loadProfile === 'function') loadProfile(preloadedData); });<\/script>`;
         htmlContent = htmlContent.replace('</body>', scriptBake + '</body>');
         zip.file("index.html", htmlContent);
         
-        const assets = [
-            'css/premium.css', 
-            'css/checkout.css', 
-            'js/checkout.js', 
-            'images/logo-black.svg', 
-            'checkout.php',
-            'api/load-config.php',
-            'api/save-config.php',
-            'api/upload.php'
-        ];
+        const assets = ['css/premium.css', 'css/checkout.css', 'images/logo-black.svg'];
         for (const file of assets) {
             try {
                 const res = await fetch(file);
-                if (res.ok) {
-                    let content;
-                    if (file === 'checkout.php') {
-                        content = await res.text();
-                        content = content.replace('%%CLIENT_ID%%', zipData.syncpay_id || '');
-                        content = content.replace('%%CLIENT_SECRET%%', zipData.syncpay_secret || '');
-                        content = content.replace('%%BASE_URL%%', zipData.syncpay_url || 'https://api.syncpayments.com.br');
-                    } else {
-                        content = await res.blob();
-                    }
-                    zip.file(file, content);
-                }
-            } catch(e) {
-                console.warn(`Falha ao incluir ${file} no ZIP:`, e);
-            }
+                if (res.ok) zip.file(file, await res.blob());
+            } catch(e) {}
         }
 
-        // 1.5 Criar um .env de exemplo para o usuário saber o que configurar
-        const envExample = `# Configurações do SyncPay (Preencha com seus dados)
-SYNCPAY_CLIENT_ID=${zipData.syncpay_id || 'SEU_CLIENT_ID'}
-SYNCPAY_CLIENT_SECRET=${zipData.syncpay_secret || 'SEU_CLIENT_SECRET'}
-SYNCPAY_BASE_URL=https://api.syncpayments.com.br
-PORT=3000
-`;
-        zip.file(".env.example", envExample);
-        zip.file("LEIA-ME.txt", "Para o site funcionar no InfinityFree / Hostinger:\n1. Suba todos os arquivos da pasta htdocs (ou a raiz do ZIP).\n2. Certifique-se de que a pasta 'api/' e 'uploads/' foram enviadas.\n3. O checkout.php já está configurado com suas credenciais.\n4. Se o Admin não salvar, verifique se o arquivo 'db.json' tem permissão de escrita (777 ou 755).");
+        zip.file("LEIA-ME.txt", "Configuração PushinPay:\n1. Coloque seu TOKEN no arquivo server.js se for rodar via Node.\n2. Este ZIP contém apenas o frontend estático com dados pré-carregados.");
 
-        // 2. Fetch e inclusão de mídias (uploads/)
-        console.log('📦 Coletando mídias para o ZIP...');
         for (const media of mediaUrls) {
             try {
                 const res = await fetch(media.original);
-                if (res.ok) {
-                    zip.file(media.zipPath, await res.blob());
-                }
-            } catch(e) {
-                console.warn('Falha ao incluir mídia no ZIP:', media.original);
-            }
+                if (res.ok) zip.file(media.zipPath, await res.blob());
+            } catch(e) {}
         }
         
         const content = await zip.generateAsync({type:"blob"});
-        saveAs(content, `perfil_${data.n.toLowerCase().replace(/\s+/g, '_')}.zip`);
-    } catch (e) {
-        console.error(e);
-        alert('Erro ao gerar ZIP. Tente o Link.');
-    } finally {
-        if(btn) {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }
-    }
+        saveAs(content, `premium_pushinpay.zip`);
+    } catch (error) { alert('Erro ao gerar ZIP'); }
+    finally { if(btn) { btn.innerHTML = '<i class="fas fa-file-archive"></i> ZIP'; btn.disabled = false; } }
 }

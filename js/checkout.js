@@ -85,44 +85,44 @@ async function handleSuitPaySubmit(event) {
             }
         };
 
-        // Chama o backend Node.js em /pagamento
+        // Detector de Base URL (Para testes locais e produção)
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const backendUrl = (isLocal && window.location.port !== '3000') 
+            ? 'http://localhost:3000/pagamento' 
+            : '/pagamento';
+
+        console.log('--- Iniciando Requisição de Pagamento ---');
+        console.log('URL de destino:', backendUrl);
+
         let response;
         try {
-            response = await fetch('/pagamento', {
+            response = await fetch(backendUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
         } catch (e) {
-            alert('Erro de conexão com o servidor. Verifique se o backend (Node.js) está rodando.');
-            throw e;
+            console.error('Erro de conexão:', e);
+            throw new Error('Não foi possível conectar ao servidor. Verifique se o backend (Node.js) está rodando na porta 3000.');
         }
 
         let data;
         if (!response.ok) {
-            const errorData = await response.json();
-            console.error("Erro da API completo:", errorData);
-            let errorMessage = "Erro na API da Suitpay: ";
-            if (errorData.details && errorData.details.message) errorMessage += errorData.details.message;
-            else if (errorData.details) errorMessage += JSON.stringify(errorData.details);
-            else errorMessage += errorData.error || "A resposta do pagamento foi inválida.";
+            const errorText = await response.text();
+            let errorData;
+            try { errorData = JSON.parse(errorText); } catch(e) { errorData = { error: errorText }; }
             
-            throw new Error(errorMessage);
-        }
-        try {
-            data = await response.json();
-        } catch (parseEr) {
-            alert('Erro: A resposta do pagamento foi inválida. O servidor pode estar fora do ar ou o gateway falhou.');
-            throw parseEr;
+            console.error("❌ Erro do Servidor:", errorData);
+            throw new Error(errorData.error || errorData.details || 'Erro interno no processamento.');
         }
 
-        console.log('Dados recebidos do Servidor:', data);
+        data = await response.json();
+        console.log('✅ Dados recebidos:', data);
 
-        if (response.ok && data.qr_code) {
+        if (data.qr_code) {
             document.getElementById('suitpayForm').style.display = 'none';
             document.getElementById('suitpayPixArea').style.display = 'block';
             
-            // Correção para forçar prefixo Base64 se não existir
             const qrRaw = data.qr_code || '';
             document.getElementById('spQrCode').src = qrRaw.startsWith('data:')
                 ? qrRaw
@@ -130,12 +130,11 @@ async function handleSuitPaySubmit(event) {
 
             document.getElementById('spCopyPaste').value = data.pay_in_code || '';
         } else {
-            const errorMsg = data.message || (data.details ? JSON.stringify(data.details) : 'Erro no processamento PIX');
-            alert('Erro na resposta do pagamento: ' + errorMsg);
+            throw new Error(data.message || 'O gateway não retornou um QR Code válido.');
         }
     } catch(err) {
-        console.error('Erro na requisição direta:', err);
-        alert('Ocorreu um erro ao gerar o PIX. Verifique seu e-mail/CPF ou tente novamente mais tarde.');
+        console.error('Erro Fatal:', err);
+        alert('ERRO AO GERAR PIX:\n' + err.message);
     } finally {
         btn.innerHTML = originalBtnText;
         btn.disabled = false;
