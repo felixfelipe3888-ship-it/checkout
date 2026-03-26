@@ -247,7 +247,7 @@ function generateLink() {
     const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
     const url = new URL(window.location.href);
     const path = url.pathname.substring(0, url.pathname.lastIndexOf('/') + 1);
-    const finalUrl = `${url.origin}${path}profile.html?d=${encodeURIComponent(encoded)}`;
+    const finalUrl = `${url.origin}${path}index.html?d=${encodeURIComponent(encoded)}`;
     navigator.clipboard.writeText(finalUrl).then(() => alert('Link copiado!'));
 }
 
@@ -261,7 +261,7 @@ async function exportZip() {
     if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; btn.disabled = true; }
 
     try {
-        const response = await fetch('profile.html');
+        const response = await fetch('index.html');
         let htmlContent = await response.text();
         const zipData = JSON.parse(JSON.stringify(data));
         const mediaUrls = [];
