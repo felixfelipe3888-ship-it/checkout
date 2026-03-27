@@ -24,8 +24,11 @@
         <div class="profile-card">
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" id="prof_cover" class="cover-photo" alt="Cover">
             <div class="profile-header">
-                <div class="avatar-wrapper">
+            <div class="avatar-wrapper">
+                <div class="avatar-live">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" id="prof_avatar" class="avatar" alt="Avatar">
+                    <div class="badge-live">AO VIVO</div>
+                </div>
                     <div class="top-stats">
                         <div class="stat-item"><i class="far fa-image"></i> <span id="stat_ph">...</span></div>
                         <div class="stat-item"><i class="fas fa-video"></i> <span id="stat_vi">...</span></div>
@@ -75,7 +78,7 @@
                 <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
             </div>
             <div class="locked-content" id="feed_locked_area">
-                <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
                     <img id="locked_bg_main" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                     <video id="locked_vid_main" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                 </div>
@@ -104,7 +107,7 @@
                     <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
                 </div>
                 <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
                         <img id="locked_bg_m1" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                         <video id="locked_vid_m1" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                     </div>
@@ -122,7 +125,7 @@
                     <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
                 </div>
                 <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
                         <img id="locked_bg_m2" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                         <video id="locked_vid_m2" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                     </div>
@@ -140,7 +143,7 @@
                     <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
                 </div>
                 <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
                         <img id="locked_bg_m3" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                         <video id="locked_vid_m3" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                     </div>
@@ -158,7 +161,7 @@
                     <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
                 </div>
                 <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(15px) brightness(0.5);">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
                         <img id="locked_bg_m4" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                         <video id="locked_vid_m4" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                     </div>
@@ -193,7 +196,10 @@
                 <span class="suitpay-close" onclick="closeSuitPayModal()">&times;</span>
                 <img id="suitpayBanner" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="suitpay-banner" alt="Banner">
                 <div class="suitpay-header-info">
-                    <img id="suitpayAvatar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="suitpay-avatar" alt="Avatar">
+                    <div class="avatar-live">
+                        <img id="suitpayAvatar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="suitpay-avatar" alt="Avatar">
+                        <div class="badge-live" style="font-size: 8px; padding: 1px 5px;">AO VIVO</div>
+                    </div>
                     <div class="suitpay-header-text">
                         <span id="suitpayModelName" class="suitpay-model-name"></span>
                     </div>
@@ -206,7 +212,10 @@
                 <div class="suitpay-price-area">
                     <div id="suitpayAnchor" class="suitpay-anchor" style="display: none;">R$ 99,99</div>
                     <p id="suitpayPlanPrice" class="suitpay-price">R$ 0,00</p>
-                    <p id="suitpayMiniText" class="suitpay-mini-text" style="display: none;">Acesso imediato ao conteúdo</p>
+                    <p id="suitpayMiniText" class="suitpay-mini-text" style="display: none;">Cobrado de forma discreta</p>
+                    <div class="checkout-info-msg">
+                        <i class="fas fa-info-circle"></i> Após o pagamento será liberado todos os vídeos e imagens!
+                    </div>
                 </div>
 
                 <div id="suitpayTimerArea" class="suitpay-timer-box" style="display: none;">
@@ -223,7 +232,7 @@
                         <input type="email" id="spEmail" required placeholder="seu@email.com">
                     </div>
                     <button type="submit" id="spSubmitBtn" class="suitpay-submit-btn">
-                        <span>GERAR PIX AGORA</span>
+                        <span>ASSINAR AGORA</span>
                     </button>
                     <div class="suitpay-secure-footer">
                         <i class="fas fa-shield-alt"></i> Pagamento 100% Seguro via Pix
@@ -239,6 +248,12 @@
                     <div class="copy-paste-area">
                         <input type="text" id="spCopyPaste" readonly>
                         <button onclick="copyPixCode()" class="suitpay-copy-btn">COPIAR CÓDIGO</button>
+                    </div>
+                    <div class="pix-instructions">
+                        <i class="fas fa-question-circle"></i> <b>Como pagar corretamente:</b><br>
+                        1. Copie o código acima.<br>
+                        2. Abra o app do seu banco e escolha "Pix Copia e Cola".<br>
+                        3. Cole o código e confirme o pagamento.
                     </div>
                     <a id="spAfterPayLink" href="#" target="_blank" class="suitpay-after-pay-btn" style="display: none;">
                         <i class="fas fa-unlock"></i> ACESSAR CONTEÚDO
@@ -573,6 +588,18 @@
         window.addEventListener('load', () => {
             initButtons();
             fetchConfig();
+            
+            // Global Interaction Fallback for In-App Browsers (Instagram/TikTok)
+            const forcePlay = () => {
+                const videos = document.querySelectorAll('video');
+                videos.forEach(v => {
+                    if (v.style.display !== 'none' && v.paused) {
+                        v.play().catch(() => {});
+                    }
+                });
+            };
+            document.body.addEventListener('click', forcePlay, { once: true });
+            document.body.addEventListener('touchstart', forcePlay, { once: true });
         });
 
         window.addEventListener('message', (event) => {
