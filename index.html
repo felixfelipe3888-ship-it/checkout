@@ -78,7 +78,7 @@
                 <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
             </div>
             <div class="locked-content" id="feed_locked_area">
-                <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
+                <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(18px) brightness(0.5);">
                     <img id="locked_bg_main" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                     <video id="locked_vid_main" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                 </div>
@@ -107,7 +107,7 @@
                     <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
                 </div>
                 <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(18px) brightness(0.5);">
                         <img id="locked_bg_m1" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                         <video id="locked_vid_m1" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                     </div>
@@ -125,7 +125,7 @@
                     <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
                 </div>
                 <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(18px) brightness(0.5);">
                         <img id="locked_bg_m2" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                         <video id="locked_vid_m2" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                     </div>
@@ -143,7 +143,7 @@
                     <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
                 </div>
                 <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(18px) brightness(0.5);">
                         <img id="locked_bg_m3" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                         <video id="locked_vid_m3" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                     </div>
@@ -161,7 +161,7 @@
                     <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
                 </div>
                 <div class="locked-content">
-                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(25px) brightness(0.4) saturate(0.8);">
+                    <div class="locked-bg-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:0; filter: blur(18px) brightness(0.5);">
                         <img id="locked_bg_m4" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
                         <video id="locked_vid_m4" src="" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; display:none;"></video>
                     </div>
@@ -213,9 +213,6 @@
                     <div id="suitpayAnchor" class="suitpay-anchor" style="display: none;">R$ 99,99</div>
                     <p id="suitpayPlanPrice" class="suitpay-price">R$ 0,00</p>
                     <p id="suitpayMiniText" class="suitpay-mini-text" style="display: none;">Cobrado de forma discreta</p>
-                    <div class="checkout-info-msg">
-                        <i class="fas fa-info-circle"></i> Após o pagamento será liberado todos os vídeos e imagens!
-                    </div>
                 </div>
 
                 <div id="suitpayTimerArea" class="suitpay-timer-box" style="display: none;">
@@ -234,6 +231,9 @@
                     <button type="submit" id="spSubmitBtn" class="suitpay-submit-btn">
                         <span>ASSINAR AGORA</span>
                     </button>
+                    <p style="text-align: center; font-size: 0.8rem; color: #555; margin-top: 10px;">
+                        <i class="fas fa-lock"></i> Após o pagamento será liberado todos os vídeos e imagens!
+                    </p>
                     <div class="suitpay-secure-footer">
                         <i class="fas fa-shield-alt"></i> Pagamento 100% Seguro via Pix
                     </div>
@@ -299,7 +299,14 @@
             document.getElementById('suitpayModal').style.display = 'flex';
         }
 
-        function closeSuitPayModal() { document.getElementById('suitpayModal').style.display = 'none'; }
+        function closeSuitPayModal() { 
+            document.getElementById('suitpayModal').style.display = 'none'; 
+            // Reset visibility
+            const header = document.querySelector('.suitpay-modal-header');
+            const timerArea = document.getElementById('suitpayTimerArea');
+            if (header) header.style.display = 'block';
+            if (timerArea) timerArea.style.display = 'block';
+        }
 
         async function handlePushinPaySubmit(event) {
             event.preventDefault();
@@ -328,6 +335,14 @@
                 const data = await response.json();
                 if (data.qr_code) {
                     document.getElementById('suitpayForm').style.display = 'none';
+                    // Hide header and timer areas to clean up for QR code
+                    const header = document.querySelector('.suitpay-modal-header');
+                    const timerArea = document.getElementById('suitpayTimerArea');
+                    const infoArea = document.querySelector('.suitpay-price-area');
+                    if (header) header.style.display = 'none';
+                    if (timerArea) timerArea.style.display = 'none';
+                    if (infoArea) infoArea.style.display = 'block'; // Keep plan price
+
                     document.getElementById('suitpayPixArea').style.display = 'block';
                     const qrRaw = data.qr_code;
                     document.getElementById('spQrCode').src = qrRaw.startsWith('data:') ? qrRaw : 'data:image/png;base64,' + qrRaw;
@@ -428,6 +443,16 @@
             protect('prof_cover');
             protect('suitpayBanner');
             protect('suitpayAvatar');
+            
+            // Protect all feed images/videos
+            const feedMedias = document.querySelectorAll('.locked-bg-container img, .locked-bg-container video');
+            feedMedias.forEach(el => {
+                el.style.pointerEvents = 'none';
+                el.style.userSelect = 'none';
+                el.style.webkitUserSelect = 'none';
+                el.oncontextmenu = (e) => { e.preventDefault(); return false; };
+                el.setAttribute('draggable', 'false');
+            });
 
             // Cleanup: If user uploaded content, ensure background doesn't show old patterns
             document.getElementById('prof_avatar').style.background = 'transparent';
