@@ -129,3 +129,6 @@ app.get('/status', (req, res) => res.json({ status: 'Online', gateway: 'PushinPa
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+// Exporta o app para Vercel via Serverless Functions
+module.exports = app;
